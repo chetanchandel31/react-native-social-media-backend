@@ -12,6 +12,7 @@
   "author": "chetan chandel",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.36",
     "nodemon": "^2.0.16",
@@ -19,6 +20,9 @@
     "typescript": "^4.7.2"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.4"
   }
 }
