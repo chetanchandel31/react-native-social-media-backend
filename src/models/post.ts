@@ -5,31 +5,16 @@ import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
   {
-    description: {
-      type: String,
-      required: true,
-    },
-    location: {
-      type: String,
-      required: true,
-    },
+    description: { type: String, required: true },
+    location: { type: String, required: true },
     picture: {
       type: String,
       default: "https://picsum.photos/id/237/600/300",
       // required: true,
     },
-    by: {
-      type: String,
-      required: true,
-    },
-    date: {
-      type: Number,
-      required: true,
-    },
-    instaId: {
-      type: String,
-      default: "some insta id",
-    },
+    by: { type: String, required: true },
+    date: { type: Number, required: true },
+    instaId: { type: String, default: "some insta id" },
     userImage: { type: String, default: "https://picsum.photos/id/1027/100" },
     // // TODO: similar to how we like/unlike
     // votesMap: {
