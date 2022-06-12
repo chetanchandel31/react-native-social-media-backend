@@ -1,9 +1,14 @@
 import mongoose from "mongoose";
+import {
+  PostDocument,
+  PostModel,
+  PostSchema,
+} from "../interfaces/mongoose.gen";
 
 // image will be uploaded from FE through a `photo` field
 // just put a hardcoded image in FE, TODO: later will replace it with static-url/id
 
-const postSchema = new mongoose.Schema(
+const postSchema: PostSchema = new mongoose.Schema(
   {
     description: { type: String, required: true },
     location: { type: String, required: true },
@@ -28,4 +33,4 @@ const postSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Post", postSchema);
+export default mongoose.model<PostDocument, PostModel>("Post", postSchema);

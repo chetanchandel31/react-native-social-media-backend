@@ -16,11 +16,17 @@ export const signin = async (req: Request, res: Response) => {
     // generate token
     const token = jwt.sign({ _id: user._id }, process.env.SECRET as string);
 
-    // don't want to send salt and password in response
-    user.encryptedPassword = undefined;
-    user.salt = undefined;
-
-    res.json({ token, user });
+    res.json({
+      token,
+      user: {
+        email: user.email,
+        name: user.name,
+        instaUserName: user.instaUserName,
+        bio: user.bio,
+        country: user.country,
+        _id: user._id,
+      },
+    });
   } catch (err: any) {
     console.log(err);
     res.status(500).json({ error: err?.message || "signin failed" });
@@ -44,13 +50,10 @@ export const signup = async (req: Request, res: Response) => {
       .json({ error: "password should be of atleast 6 characters" });
 
   try {
-    const savedUser = await newUser.save();
+    const { email, name, instaUserName, bio, country, _id } =
+      await newUser.save();
 
-    // don't want to send salt and password in response
-    savedUser.encryptedPassword = undefined;
-    savedUser.salt = undefined;
-
-    res.json(savedUser);
+    res.json({ email, name, instaUserName, bio, country, _id });
   } catch (err: any) {
     console.log(err);
     res.status(400).json({ error: err?.message || "signup failed" });

@@ -1,8 +1,13 @@
 import { v4 as uuid } from "uuid";
 import crypto from "crypto";
 import mongoose from "mongoose";
+import {
+  UserDocument,
+  UserModel,
+  UserSchema,
+} from "../interfaces/mongoose.gen";
 
-const userSchema = new mongoose.Schema({
+const userSchema: UserSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   instaUserName: { type: String, required: true },
@@ -31,4 +36,4 @@ userSchema.methods = {
   },
 };
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model<UserDocument, UserModel>("User", userSchema);
