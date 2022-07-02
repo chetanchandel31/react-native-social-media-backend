@@ -1,10 +1,17 @@
 import express from "express";
-import { createPost, listPosts } from "../controllers/posts";
+import {
+  createPost,
+  downVotePost,
+  listPosts,
+  upVotePost,
+} from "../controllers/posts";
+import { protect } from "../middlewares/protect";
 
 const router = express.Router();
 
-// TODO: endpoints for upvoting and downvoting posts
 router.get("/posts", listPosts);
-router.post("/posts", createPost);
+router.post("/posts", protect, createPost);
+router.post("/posts/:id/upvote", protect, upVotePost);
+router.post("/posts/:id/downvote", protect, downVotePost);
 
 export default router;

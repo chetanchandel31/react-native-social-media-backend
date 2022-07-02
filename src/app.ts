@@ -2,10 +2,21 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import { UserDocument } from "./interfaces/mongoose.gen";
+import { addFakeDelayBeforeResponse } from "./middlewares/addFakeDelayBeforeResponse";
 import authRoutes from "./routes/auth";
 import postRoutes from "./routes/posts";
 
 dotenv.config();
+
+// to be able to add custom properties to request via middlewares
+declare global {
+  namespace Express {
+    interface Request {
+      userFromToken?: UserDocument;
+    }
+  }
+}
 
 const app = express();
 
@@ -13,6 +24,7 @@ const app = express();
 app.use(express.json()); // these let us access req.body
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(addFakeDelayBeforeResponse(app.settings.env));
 // app.use(cookieParser());
 
 // routes

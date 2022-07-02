@@ -19,10 +19,12 @@ export type Post = {
   description: string;
   location: string;
   picture?: string;
-  by: string;
   date: number;
   instaId?: string;
   userImage?: string;
+  upvotes: string[];
+  downvotes: string[];
+  user?: User["_id"] | User;
   _id: mongoose.Types.ObjectId;
   updatedAt?: Date;
   createdAt?: Date;
@@ -101,10 +103,12 @@ export type PostDocument = mongoose.Document<
     description: string;
     location: string;
     picture?: string;
-    by: string;
     date: number;
     instaId?: string;
     userImage?: string;
+    upvotes: mongoose.Types.Array<string>;
+    downvotes: mongoose.Types.Array<string>;
+    user?: UserDocument["_id"] | UserDocument;
     _id: mongoose.Types.ObjectId;
     updatedAt?: Date;
     createdAt?: Date;

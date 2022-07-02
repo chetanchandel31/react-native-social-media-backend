@@ -17,18 +17,12 @@ const postSchema: PostSchema = new mongoose.Schema(
       default: "https://picsum.photos/id/237/600/300",
       // required: true,
     },
-    by: { type: String, required: true },
     date: { type: Number, required: true },
     instaId: { type: String, default: "some insta id" },
     userImage: { type: String, default: "https://picsum.photos/id/1027/100" },
-    // // TODO: similar to how we like/unlike
-    // votesMap: {
-    //   type: Map,
-    //   of: {
-    //     type: { type: String, enum: ["upvote", "downvote"] },
-    //   },
-    //   default: {},
-    // },
+    upvotes: { type: [String], default: [] },
+    downvotes: { type: [String], default: [] },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );
