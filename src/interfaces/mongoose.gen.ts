@@ -18,8 +18,11 @@ import mongoose from "mongoose";
 export type Post = {
   description: string;
   location: string;
-  picture?: string;
   date: number;
+  image: {
+    data?: Buffer;
+    contentType?: string;
+  };
   instaId?: string;
   userImage?: string;
   upvotes: string[];
@@ -102,8 +105,11 @@ export type PostDocument = mongoose.Document<
   PostMethods & {
     description: string;
     location: string;
-    picture?: string;
     date: number;
+    image: {
+      data?: mongoose.Types.Buffer;
+      contentType?: string;
+    };
     instaId?: string;
     userImage?: string;
     upvotes: mongoose.Types.Array<string>;

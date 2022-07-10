@@ -21,8 +21,8 @@ declare global {
 const app = express();
 
 // middlewares
-app.use(express.json()); // these let us access req.body
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" })); // these let us access req.body, w/o limit property we get "request too large"
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 app.use(addFakeDelayBeforeResponse(app.settings.env));
 // app.use(cookieParser());
