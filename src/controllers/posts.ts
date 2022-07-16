@@ -38,7 +38,7 @@ export const createPost = async (req: Request, res: Response) => {
   }
 };
 
-export const listPosts = async (req: Request, res: Response) => {
+export const listPosts = async (_req: Request, res: Response) => {
   try {
     const posts = await Post.find()
       .select("-image")
@@ -129,5 +129,32 @@ export const getPostImage = async (req: Request, res: Response) => {
     return res.send(post.image.data);
   } catch (error: any) {
     res.status(500).json({ error: error.message || "couldn't get an image" });
+  }
+};
+
+export const deletePost = async (req: Request, res: Response) => {
+  const { id: postId } = req.params;
+
+  try {
+    const post = await Post.findById(postId)
+      .select("-image")
+      .populate("user", "-encryptedPassword -salt");
+
+    if (!post) {
+      return res.status(404).json({ error: "no post with the given id found" });
+    }
+
+    if (req.userFromToken?._id.toString() !== post.user?._id.toString()) {
+      return res
+        .status(402)
+        .json({ error: "you are not authorised to delete this post" });
+    }
+
+    const deletedPost = await post.remove();
+    res.status(200).json({ success: true, deletedPost });
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ error: error.message || "couldn't delete the post" });
   }
 };
