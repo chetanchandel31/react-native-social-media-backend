@@ -24,7 +24,6 @@ export type Post = {
     contentType?: string;
   };
   instaId?: string;
-  userImage?: string;
   upvotes: string[];
   downvotes: string[];
   user?: User["_id"] | User;
@@ -111,7 +110,6 @@ export type PostDocument = mongoose.Document<
       contentType?: string;
     };
     instaId?: string;
-    userImage?: string;
     upvotes: mongoose.Types.Array<string>;
     downvotes: mongoose.Types.Array<string>;
     user?: UserDocument["_id"] | UserDocument;
@@ -136,6 +134,10 @@ export type User = {
   country: string;
   salt: string;
   encryptedPassword: string;
+  userImage: {
+    data?: Buffer;
+    contentType?: string;
+  };
   _id: mongoose.Types.ObjectId;
 };
 
@@ -218,6 +220,10 @@ export type UserDocument = mongoose.Document<
     country: string;
     salt: string;
     encryptedPassword: string;
+    userImage: {
+      data?: mongoose.Types.Buffer;
+      contentType?: string;
+    };
     _id: mongoose.Types.ObjectId;
     password: any;
   };

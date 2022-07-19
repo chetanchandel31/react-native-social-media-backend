@@ -34,26 +34,47 @@ export const signin = async (req: Request, res: Response) => {
 };
 
 export const signup = async (req: Request, res: Response) => {
-  const { email, password, name, instaUserName, bio, country } = req.body;
-  const newUser = new User({
-    email,
-    password,
-    name,
-    instaUserName,
-    bio,
-    country,
-  });
-
-  if (password?.length < 6)
-    return res
-      .status(400)
-      .json({ error: "password should be of atleast 6 characters" });
+  const { email, password, name, instaUserName, bio, country, image } =
+    req.body;
 
   try {
-    const { email, name, instaUserName, bio, country, _id } =
-      await newUser.save();
+    if (password?.length < 6) {
+      return res
+        .status(400)
+        .json({ error: "password should be of atleast 6 characters" });
+    }
+    // handle image
+    if (image && !image?.type?.includes("image")) {
+      return res
+        .status(400)
+        .json({ error: "uploaded file is not a valid image" });
+    }
+    if (image && image?.fileSize > 3000000) {
+      return res.status(400).json({ error: "image size too large" });
+    }
 
-    res.json({ email, name, instaUserName, bio, country, _id });
+    const newUser = new User({
+      email,
+      password,
+      name,
+      instaUserName,
+      bio,
+      country,
+      userImage: image
+        ? { data: Buffer.from(image.data, "base64"), contentType: image?.type }
+        : undefined,
+    });
+
+    const savedUser = await newUser.save();
+
+    res.json({
+      email: savedUser.email,
+      name: savedUser.name,
+      instaUserName: savedUser.instaUserName,
+      bio: savedUser.bio,
+      country: savedUser.country,
+      _id: savedUser._id,
+    });
   } catch (err: any) {
     console.log(err);
     res.status(400).json({ error: err?.message || "signup failed" });

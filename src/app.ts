@@ -6,6 +6,7 @@ import { UserDocument } from "./interfaces/mongoose.gen";
 import { addFakeDelayBeforeResponse } from "./middlewares/addFakeDelayBeforeResponse";
 import authRoutes from "./routes/auth";
 import postRoutes from "./routes/posts";
+import userRoutes from "./routes/user";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use(addFakeDelayBeforeResponse(app.settings.env));
 app.get("/api", (req, res) => res.send("backend app is up and running"));
 app.use("/api", postRoutes);
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 
 const PORT = process.env.PORT || 7000;
 

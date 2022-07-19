@@ -43,7 +43,7 @@ export const listPosts = async (_req: Request, res: Response) => {
     const posts = await Post.find()
       .select("-image")
       .populate("user", "-encryptedPassword -salt");
-    res.json(posts);
+    res.json(posts.filter((post) => !!post.user));
   } catch (error: any) {
     res
       .status(500)
@@ -126,7 +126,7 @@ export const getPostImage = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "no post with the given id found" });
     }
     res.set("Content-Type", post.image.contentType);
-    return res.send(post.image.data);
+    res.send(post.image.data);
   } catch (error: any) {
     res.status(500).json({ error: error.message || "couldn't get an image" });
   }
