@@ -4,6 +4,8 @@ import express from "express";
 import mongoose from "mongoose";
 import { UserDocument } from "./interfaces/mongoose.gen";
 import { addFakeDelayBeforeResponse } from "./middlewares/addFakeDelayBeforeResponse";
+import { errorHandler } from "./middlewares/errorHandler";
+import { routeNotFound } from "./middlewares/routeNotFound";
 import authRoutes from "./routes/auth";
 import postRoutes from "./routes/posts";
 import userRoutes from "./routes/user";
@@ -33,6 +35,10 @@ app.get("/api", (req, res) => res.send("backend app is up and running"));
 app.use("/api", postRoutes);
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+
+// handle errors and 404s
+app.use(routeNotFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 7000;
 

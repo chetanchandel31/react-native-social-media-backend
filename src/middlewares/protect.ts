@@ -22,7 +22,7 @@ export const protect = async (
       typeof decodedData !== "string" &&
       (await User.findById(decodedData?._id));
 
-    if (!relatedUser) return res.status(402).json({ error: "INVALID TOKEN" });
+    if (!relatedUser) return res.status(401).json({ error: "INVALID TOKEN" });
 
     req.userFromToken = relatedUser;
 
