@@ -16,7 +16,6 @@ const postSchema: PostSchema = new mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
-    instaId: { type: String, default: "some insta id" }, // TODO: check if it's same as in User and remove from here
     upvotes: { type: [String], default: [] },
     downvotes: { type: [String], default: [] },
     user: { type: ObjectId, ref: "User" },

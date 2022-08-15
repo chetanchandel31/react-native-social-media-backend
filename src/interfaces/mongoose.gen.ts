@@ -23,7 +23,6 @@ export type Post = {
     data?: Buffer;
     contentType?: string;
   };
-  instaId?: string;
   upvotes: string[];
   downvotes: string[];
   user?: User["_id"] | User;
@@ -109,7 +108,6 @@ export type PostDocument = mongoose.Document<
       data?: mongoose.Types.Buffer;
       contentType?: string;
     };
-    instaId?: string;
     upvotes: mongoose.Types.Array<string>;
     downvotes: mongoose.Types.Array<string>;
     user?: UserDocument["_id"] | UserDocument;
